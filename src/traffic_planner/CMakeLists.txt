@@ -13,21 +13,35 @@ add_library(traffic_planner_lib
   src/TrafficPlanner.cpp
 )
 
-# TrafficPlannerNode 라이브러리 (ROS2 의존적)
+# 기존 TrafficPlannerNode 라이브러리 (ROS2 의존적)
 add_library(traffic_planner_node_lib
   src/TrafficPlannerNode.cpp
 )
 
-# 실행 파일
+# 새로운 SynchronizedTrafficPlannerNode 라이브러리 (ROS2 의존적)
+add_library(synchronized_traffic_planner_node_lib
+  src/SynchronizedTrafficPlannerNode.cpp
+)
+
+# 기존 실행 파일
 add_executable(traffic_path_planner
   src/main.cpp
 )
 
-# 라이브러리 링크
+# 새로운 동기화 실행 파일
+add_executable(synchronized_traffic_path_planner
+  src/main_synchronized.cpp
+)
+
+# 라이브러리 링크 - 기존
 target_link_libraries(traffic_planner_node_lib traffic_planner_lib)
 target_link_libraries(traffic_path_planner traffic_planner_node_lib)
 
-# ROS2 의존성 (노드 라이브러리와 실행 파일에만 적용)
+# 라이브러리 링크 - 새로운 동기화 버전
+target_link_libraries(synchronized_traffic_planner_node_lib traffic_planner_lib)
+target_link_libraries(synchronized_traffic_path_planner synchronized_traffic_planner_node_lib)
+
+# ROS2 의존성 - 기존
 ament_target_dependencies(traffic_planner_node_lib
   rclcpp
   geometry_msgs
@@ -40,11 +54,26 @@ ament_target_dependencies(traffic_path_planner
   nav_msgs
 )
 
+# ROS2 의존성 - 새로운 동기화 버전
+ament_target_dependencies(synchronized_traffic_planner_node_lib
+  rclcpp
+  geometry_msgs
+  nav_msgs
+)
+
+ament_target_dependencies(synchronized_traffic_path_planner
+  rclcpp
+  geometry_msgs
+  nav_msgs
+)
+
 # 설치
 install(TARGETS 
   traffic_path_planner 
+  synchronized_traffic_path_planner
   traffic_planner_lib 
   traffic_planner_node_lib
+  synchronized_traffic_planner_node_lib
   DESTINATION lib/${PROJECT_NAME}
 )
 
