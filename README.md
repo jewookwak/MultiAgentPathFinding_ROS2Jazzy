@@ -16,16 +16,16 @@
     ros2 run traffic_planner traffic_planner_node --ros-args -p use_disjoint_splitting:=true
 
 - Synchronized agents MAPF  
-동기화 활성화  
-ros2 run traffic_planner synchronized_traffic_planner_node --ros-args \
-  -p synchronization_enabled:=true \
-  -p sync_check_interval:=0.1 \
-  -p use_disjoint_splitting:=true  
+   동기화 활성화  
+   ros2 run traffic_planner synchronized_traffic_planner_node --ros-args \
+     -p synchronization_enabled:=true \
+     -p sync_check_interval:=0.1 \
+     -p use_disjoint_splitting:=true  
   
-동기화 비활성화 (기존 방식)  
-ros2 run traffic_planner synchronized_traffic_planner_node --ros-args \
-  -p synchronization_enabled:=false  
-  
+   동기화 비활성화 (기존 방식)  
+   ros2 run traffic_planner synchronized_traffic_planner_node --ros-args \
+     -p synchronization_enabled:=false  
+     
   
 4. Domain Bridge
 - Talker Listener example
