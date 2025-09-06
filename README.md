@@ -15,7 +15,14 @@
 - CBS disjoint  
     ros2 run traffic_planner traffic_planner_node --ros-args -p use_disjoint_splitting:=true
 
-- 
+- Synchronized MAPF
+  # 동기화 활성화  
+ros2 run traffic_planner synchronized_traffic_planner_node --ros-args \
+  -p synchronization_enabled:=true \
+  -p sync_check_interval:=0.1 \
+  -p use_disjoint_splitting:=true
+  
+  
 4. Domain Bridge
 - Talker Listener example
 - Server PC <-> AMR
