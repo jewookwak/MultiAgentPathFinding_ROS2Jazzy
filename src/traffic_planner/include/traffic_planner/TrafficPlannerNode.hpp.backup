@@ -42,7 +42,6 @@ private:
     int num_robots_;
     double timeout_seconds_;
     double resolution_;
-    bool use_disjoint_splitting_;  // Disjoint Splitting 사용 여부
     
     // 초기화 함수들
     void initializeParameters();

@@ -10,7 +10,6 @@
 #include <algorithm>
 #include <set>
 #include <cmath>
-#include <random>
 
 using Position = std::pair<int, int>;
 
@@ -18,12 +17,6 @@ struct Constraint {
     int agent;
     int timestep;
     std::vector<Position> loc;  // size=1이면 vertex constraint, size=2이면 edge constraint
-    bool positive = false;      // true면 positive constraint, false면 negative constraint
-    
-    // 생성자들
-    Constraint() = default;
-    Constraint(int a, int t, const std::vector<Position>& l, bool pos = false) 
-        : agent(a), timestep(t), loc(l), positive(pos) {}
 };
 
 struct Conflict {
@@ -78,15 +71,6 @@ private:
         int agent,
         const std::vector<Constraint>& constraints
     ) const;
-    
-    // Positive constraint 검사 함수 추가
-    bool satisfiesPositiveConstraints(
-        const Position& curr,
-        const Position& next,
-        int timestep,
-        int agent,
-        const std::vector<Constraint>& constraints
-    ) const;
 };
 
 class TrafficPlanner {
@@ -112,18 +96,11 @@ public:
 
 private:
     std::vector<std::vector<bool>> map_;
-    std::mt19937 rng_;  // 랜덤 생성기 추가
     
     // CBS 내부 구현
     std::vector<Conflict> detectCollisions(const std::vector<std::vector<Position>>& paths) const;
     std::vector<Constraint> standardSplitting(const Conflict& conflict) const;
-    std::vector<Constraint> disjointSplitting(const Conflict& conflict);  // 실제 구현으로 변경
-    
-    // Positive constraint 위반 검사
-    std::vector<int> getAgentsViolatingPositiveConstraint(
-        const Constraint& positive_constraint,
-        const std::vector<std::vector<Position>>& paths
-    ) const;
+    std::vector<Constraint> disjointSplitting(const Conflict& conflict) const;
     
     // 휴리스틱 계산
     std::vector<std::vector<int>> calculateManhattanHeuristics(const Position& goal) const;
