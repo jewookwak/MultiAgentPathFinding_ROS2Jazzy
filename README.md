@@ -8,7 +8,14 @@
 - Affine Transformation
 3. MAPF(Multi Agent Path Finding)
 - A*
-- CBS Planner
+   
+- CBS Planner  
+    ros2 run traffic_planner traffic_planner_node --ros-args -p use_disjoint_splitting:=false
+  
+- CBS disjoint  
+    ros2 run traffic_planner traffic_planner_node --ros-args -p use_disjoint_splitting:=true
+
+- 
 4. Domain Bridge
 - Talker Listener example
 - Server PC <-> AMR
